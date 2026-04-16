@@ -4,13 +4,7 @@ FROM ${UV_IMAGE} AS uv-source
 FROM python:3.12-slim-bookworm AS builder
 
 ARG NODE_MAJOR=22
-ARG APT_MIRROR
 ARG UV_INDEX_URL
-
-RUN if [ -n "${APT_MIRROR}" ]; then \
-      sed -i "s|deb.debian.org|${APT_MIRROR}|g" /etc/apt/sources.list.d/debian.sources 2>/dev/null || true; \
-      sed -i "s|deb.debian.org|${APT_MIRROR}|g" /etc/apt/sources.list 2>/dev/null || true; \
-    fi
 
 RUN apt-get update && apt-get install -y \
     curl \
@@ -45,8 +39,8 @@ COPY --from=uv-source /uv /uvx /usr/local/bin/
 
 WORKDIR /app
 
-COPY --from=builder /app/backend ./backend
+COPY --from=builder /app .
 
 EXPOSE 8001 2024
 
-CMD ["sh", "-c", "cd backend && PYTHONPATH=. uv run --no-sync uvicorn app.gateway.app:app --host 0.0.0.0 --port 8001"]
+CMD ["sh", "-c", "PYTHONPATH=. uv run --no-sync uvicorn app.gateway.app:app --host 0.0.0.0 --port 8001"]
