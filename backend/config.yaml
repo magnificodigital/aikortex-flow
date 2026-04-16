@@ -1,0 +1,41 @@
+config_version: 7
+
+log_level: info
+
+models:
+  - name: gemini-flash
+    display_name: Gemini 2.5 Flash
+    use: langchain_openai:ChatOpenAI
+    model: google/gemini-2.5-flash-preview-04-17
+    api_key: $OPENROUTER_API_KEY
+    base_url: https://openrouter.ai/api/v1
+    request_timeout: 600.0
+    max_retries: 2
+    max_tokens: 8192
+
+tool_groups:
+  - name: web
+  - name: file:read
+
+tools:
+  - name: web_search
+    group: web
+    use: deerflow.community.ddg_search.tools:web_search_tool
+    max_results: 5
+
+  - name: web_fetch
+    group: web
+    use: deerflow.community.jina_ai.tools:web_fetch_tool
+    timeout: 10
+
+  - name: read_file
+    group: file:read
+    use: deerflow.sandbox.tools:read_file_tool
+
+sandbox:
+  use: deerflow.sandbox.local:LocalSandboxProvider
+  allow_host_bash: false
+
+checkpointer:
+  type: sqlite
+  connection_string: checkpoints.db
