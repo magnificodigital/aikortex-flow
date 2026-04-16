@@ -28,7 +28,7 @@ COPY --from=uv-source /uv /uvx /usr/local/bin/
 
 WORKDIR /app
 
-COPY . .
+COPY backend/ .
 
 RUN UV_INDEX_URL=${UV_INDEX_URL:-https://pypi.org/simple} uv sync
 
