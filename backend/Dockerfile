@@ -28,9 +28,9 @@ COPY --from=uv-source /uv /uvx /usr/local/bin/
 
 WORKDIR /app
 
-COPY . ./backend
+COPY . .
 
-RUN cd backend && UV_INDEX_URL=${UV_INDEX_URL:-https://pypi.org/simple} uv sync
+RUN UV_INDEX_URL=${UV_INDEX_URL:-https://pypi.org/simple} uv sync
 
 FROM python:3.12-slim-bookworm
 
