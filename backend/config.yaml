@@ -39,3 +39,6 @@ sandbox:
 checkpointer:
   type: sqlite
   connection_string: checkpoints.db
+
+  agents_api:
+  enabled: true
