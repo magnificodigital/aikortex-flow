@@ -1,0 +1,6 @@
+name: lead-agent
+description: DeerFlow lead agent for Aikortex
+model: gemini-flash
+tool_groups:
+  - web
+  - file:read
