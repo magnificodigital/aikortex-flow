@@ -1,4 +1,0 @@
-config_version: 7
-
-agents_api:
-  enabled: true
