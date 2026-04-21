@@ -1,5 +1,9 @@
 config_version: 7
 
+# agents_api habilitado para Aikortex bridge
+agents_api:
+  enabled: true
+
 log_level: info
 
 models:
@@ -39,6 +43,3 @@ sandbox:
 checkpointer:
   type: sqlite
   connection_string: checkpoints.db
-
-  agents_api:
-  enabled: true
