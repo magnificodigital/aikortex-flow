@@ -82,25 +82,25 @@ def create_app() -> FastAPI:
     """
 
     app = FastAPI(
-        title="DeerFlow API Gateway",
+        title="Aikortex Flow Engine",
         description="""
-## DeerFlow API Gateway
+## Aikortex Flow Engine
 
-API Gateway for DeerFlow - A LangGraph-based AI agent backend with sandbox execution capabilities.
+Motor de agentes de IA da plataforma Aikortex, baseado em LangGraph com capacidades avançadas de execução.
 
-### Features
+### Funcionalidades
 
-- **Models Management**: Query and retrieve available AI models
-- **MCP Configuration**: Manage Model Context Protocol (MCP) server configurations
-- **Memory Management**: Access and manage global memory data for personalized conversations
-- **Skills Management**: Query and manage skills and their enabled status
-- **Artifacts**: Access thread artifacts and generated files
-- **Health Monitoring**: System health check endpoints
+- **Modelos**: Consulte e gerencie os modelos de IA disponíveis
+- **MCP**: Gerencie configurações de servidores Model Context Protocol
+- **Memória**: Acesse e gerencie memória global para conversas personalizadas
+- **Skills**: Consulte e gerencie skills e seus status
+- **Artefatos**: Acesse artefatos e arquivos gerados por threads
+- **Monitoramento**: Endpoints de health check do sistema
 
-### Architecture
+### Arquitetura
 
-LangGraph requests are handled by nginx reverse proxy.
-This gateway provides custom endpoints for models, MCP configuration, skills, and artifacts.
+Requisições LangGraph são tratadas pelo proxy reverso nginx.
+Este gateway fornece endpoints customizados para modelos, MCP, skills e artefatos.
         """,
         version="0.1.0",
         lifespan=lifespan,
@@ -110,55 +110,55 @@ This gateway provides custom endpoints for models, MCP configuration, skills, an
         openapi_tags=[
             {
                 "name": "models",
-                "description": "Operations for querying available AI models and their configurations",
+                "description": "Operações para consultar modelos de IA disponíveis e suas configurações",
             },
             {
                 "name": "mcp",
-                "description": "Manage Model Context Protocol (MCP) server configurations",
+                "description": "Gerenciar configurações de servidores Model Context Protocol (MCP)",
             },
             {
                 "name": "memory",
-                "description": "Access and manage global memory data for personalized conversations",
+                "description": "Acessar e gerenciar memória global para conversas personalizadas",
             },
             {
                 "name": "skills",
-                "description": "Manage skills and their configurations",
+                "description": "Gerenciar skills e suas configurações",
             },
             {
                 "name": "artifacts",
-                "description": "Access and download thread artifacts and generated files",
+                "description": "Acessar e baixar artefatos e arquivos gerados por threads",
             },
             {
                 "name": "uploads",
-                "description": "Upload and manage user files for threads",
+                "description": "Upload e gerenciamento de arquivos de usuário para threads",
             },
             {
                 "name": "threads",
-                "description": "Manage DeerFlow thread-local filesystem data",
+                "description": "Gerenciar dados de filesystem local por thread",
             },
             {
                 "name": "agents",
-                "description": "Create and manage custom agents with per-agent config and prompts",
+                "description": "Criar e gerenciar agentes customizados com config e prompts por agente",
             },
             {
                 "name": "suggestions",
-                "description": "Generate follow-up question suggestions for conversations",
+                "description": "Gerar sugestões de perguntas de acompanhamento para conversas",
             },
             {
                 "name": "channels",
-                "description": "Manage IM channel integrations (Feishu, Slack, Telegram)",
+                "description": "Gerenciar integrações de canais (Feishu, Slack, Telegram)",
             },
             {
                 "name": "assistants-compat",
-                "description": "LangGraph Platform-compatible assistants API (stub)",
+                "description": "API de assistants compatível com LangGraph Platform (stub)",
             },
             {
                 "name": "runs",
-                "description": "LangGraph Platform-compatible runs lifecycle (create, stream, cancel)",
+                "description": "Ciclo de vida de runs compatível com LangGraph Platform (criar, stream, cancelar)",
             },
             {
                 "name": "health",
-                "description": "Health check and system status endpoints",
+                "description": "Endpoints de health check e status do sistema",
             },
         ],
     )
@@ -166,43 +166,18 @@ This gateway provides custom endpoints for models, MCP configuration, skills, an
     # CORS is handled by nginx - no need for FastAPI middleware
 
     # Include routers
-    # Models API is mounted at /api/models
     app.include_router(models.router)
-
-    # MCP API is mounted at /api/mcp
     app.include_router(mcp.router)
-
-    # Memory API is mounted at /api/memory
     app.include_router(memory.router)
-
-    # Skills API is mounted at /api/skills
     app.include_router(skills.router)
-
-    # Artifacts API is mounted at /api/threads/{thread_id}/artifacts
     app.include_router(artifacts.router)
-
-    # Uploads API is mounted at /api/threads/{thread_id}/uploads
     app.include_router(uploads.router)
-
-    # Thread cleanup API is mounted at /api/threads/{thread_id}
     app.include_router(threads.router)
-
-    # Agents API is mounted at /api/agents
     app.include_router(agents.router)
-
-    # Suggestions API is mounted at /api/threads/{thread_id}/suggestions
     app.include_router(suggestions.router)
-
-    # Channels API is mounted at /api/channels
     app.include_router(channels.router)
-
-    # Assistants compatibility API (LangGraph Platform stub)
     app.include_router(assistants_compat.router)
-
-    # Thread Runs API (LangGraph Platform-compatible runs lifecycle)
     app.include_router(thread_runs.router)
-
-    # Stateless Runs API (stream/wait without a pre-existing thread)
     app.include_router(runs.router)
 
     @app.get("/health", tags=["health"])
@@ -212,7 +187,7 @@ This gateway provides custom endpoints for models, MCP configuration, skills, an
         Returns:
             Service health status information.
         """
-        return {"status": "healthy", "service": "deer-flow-gateway"}
+        return {"status": "healthy", "service": "aikortex-flow-engine"}
 
     return app
 
